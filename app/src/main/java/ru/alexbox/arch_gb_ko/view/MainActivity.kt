@@ -1,6 +1,7 @@
 package ru.alexbox.arch_gb_ko.view
 
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +31,7 @@ class MainActivity : BaseActivity<DataModel>() {
         setContentView(R.layout.activity_main)
     }
 
-    fun buttonLogic() {
+    fun buttonLogic(view: View) {
         val editText: EditText = findViewById(R.id.edit_text)
         val searchWord : String
         searchWord = editText.text.toString()
