@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Arch_GB_Ko"
         tools:ignore="AllowBackup">
-        <activity android:name=".view.BaseActivity"></activity>
+        <activity android:name=".view.BaseActivity">
+
+        </activity>
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

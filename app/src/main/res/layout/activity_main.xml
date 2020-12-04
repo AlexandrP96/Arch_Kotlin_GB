@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/panel_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="607dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,19 +37,17 @@
 
             <EditText
                 android:id="@+id/edit_text"
-                android:layout_width="wrap_content"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/edit_text_tap"
+                android:text="@string/status_none"
                 tools:ignore="Autofill,LabelFor" />
 
             <Button
                 android:id="@+id/button_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:onClick="buttonLogic"
                 android:text="@string/btn_go" />
         </LinearLayout>
