@@ -1,21 +1,23 @@
-package ru.alexbox.arch_gb_ko.view
+package ru.alexbox.arch_gb_ko.view.main
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.alexbox.arch_gb_ko.R
-import ru.alexbox.arch_gb_ko.data.SearchResult
 import kotlinx.android.synthetic.main.recycler_view_item.view.*
+import ru.alexbox.arch_gb_ko.model.data.DataModel
 
-class MainAdapter(private var onListItemClickListener: OnListItemClickListener, private var data: List<SearchResult>) :
+class MainAdapter(private var onListItemClickListener: OnListItemClickListener) :
     RecyclerView.Adapter<MainAdapter.RecyclerItemViewHolder>() {
 
+    private var data: List<DataModel> = arrayListOf()
+
     interface OnListItemClickListener {
-        fun onItemClick(data: SearchResult)
+        fun onItemClick(data: DataModel)
     }
 
-    fun setData(data: List<SearchResult>) {
+    fun setData(data: List<DataModel>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -31,7 +33,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     }
 
     override fun onBindViewHolder(holder: RecyclerItemViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
 
     }
     override fun getItemCount(): Int {
@@ -39,7 +41,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
     }
 
     inner class RecyclerItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(data: SearchResult) {
+        fun bind(data: DataModel) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.header_item.text = data.text
                 itemView.description_item.text = data.meanings?.get(0)?.translation?.translation
@@ -49,7 +51,7 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener, 
         }
     }
 
-    private fun getResult(listItemData: SearchResult) {
+    private fun getResult(listItemData: DataModel) {
         onListItemClickListener.onItemClick(listItemData)
     }
 }

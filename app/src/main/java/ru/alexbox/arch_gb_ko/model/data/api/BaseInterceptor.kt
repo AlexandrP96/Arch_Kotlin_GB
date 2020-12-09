@@ -1,4 +1,4 @@
-package ru.alexbox.arch_gb_ko.datasource
+package ru.alexbox.arch_gb_ko.model.data.api
 
 import okhttp3.Interceptor
 import okhttp3.Response
