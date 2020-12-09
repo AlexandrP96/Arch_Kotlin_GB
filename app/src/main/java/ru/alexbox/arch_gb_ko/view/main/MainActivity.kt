@@ -85,4 +85,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         status_view.text = getString(R.string.status_loading)
     }
 
+    private fun showErrorInternet() {
+        status_view.text = getString(R.string.empty_server_responce)
+    }
+
 }
