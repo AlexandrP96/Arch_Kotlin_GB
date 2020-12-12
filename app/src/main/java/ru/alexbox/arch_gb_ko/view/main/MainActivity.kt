@@ -15,6 +15,8 @@ import ru.alexbox.arch_gb_ko.model.data.DataModel
 import ru.alexbox.arch_gb_ko.view.base.BaseActivity
 import javax.inject.Inject
 
+// for initial commit
+
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     @Inject
