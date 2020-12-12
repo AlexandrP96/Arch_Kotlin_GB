@@ -5,6 +5,7 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".view.main.MainActivity">
 
     <LinearLayout
@@ -29,28 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="526dp" />
 
-        <LinearLayout
-            android:id="@+id/search_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/edit_text"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/status_none"
-                tools:ignore="Autofill,LabelFor" />
-
-            <Button
-                android:id="@+id/button_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="buttonLogic"
-                android:text="@string/btn_go" />
-        </LinearLayout>
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        app:srcCompat="@android:drawable/btn_star_big_on"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>

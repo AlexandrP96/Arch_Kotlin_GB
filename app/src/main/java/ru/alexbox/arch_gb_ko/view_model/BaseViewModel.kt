@@ -2,18 +2,28 @@ package ru.alexbox.arch_gb_ko.view_model
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.*
 import ru.alexbox.arch_gb_ko.model.data.AppState
-import ru.alexbox.arch_gb_ko.rx.ShedulerProvider
 
 abstract class BaseViewModel<T : AppState>(
-    protected open val liveDataForViewObserve: MutableLiveData<T> = MutableLiveData(),
-    protected open val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-    protected open val shedulerProvider: ShedulerProvider = ShedulerProvider()
+    protected open val mutableLiveData: MutableLiveData<T> = MutableLiveData()
 ) : ViewModel() {
-    abstract fun getData(word: String, isOnline: Boolean)
+    protected val viewModelCoroutineScope = CoroutineScope(
+        Dispatchers.Main
+                + SupervisorJob()
+                + CoroutineExceptionHandler { _, throwable ->
+            handleError(throwable)
+        }
+    )
+
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.clear()
+        cancelJob()
     }
+
+    protected fun cancelJob() {
+        viewModelCoroutineScope.coroutineContext.cancelChildren()
+    }
+    abstract fun getData(word: String, isOnline: Boolean)
+    abstract fun handleError(error: Throwable)
 }

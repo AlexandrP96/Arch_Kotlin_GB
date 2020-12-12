@@ -4,38 +4,40 @@ import androidx.lifecycle.LiveData
 import io.reactivex.disposables.Disposable
 import ru.alexbox.arch_gb_ko.util.parseSearchResults
 import io.reactivex.observers.DisposableObserver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import ru.alexbox.arch_gb_ko.model.data.AppState
 import ru.alexbox.arch_gb_ko.view_model.BaseViewModel
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val interactor: MainInteractor) :
+class MainViewModel(private val interactor: MainInteractor) :
         BaseViewModel<AppState>() {
 
-    private var appState: AppState? = null
+    private val liveDataForViewToObserve : LiveData<AppState> = mutableLiveData
 
-    fun subscribe() : LiveData<AppState> {
-        return liveDataForViewObserve
-    }
-
-    private fun doOnSubscribe() : (Disposable) -> Unit = {liveDataForViewObserve.value = AppState.Loading(null)}
-
-    private fun getObserver(): DisposableObserver<AppState> {
-        return object : DisposableObserver<AppState>() {
-
-            override fun onNext(t: AppState) {
-                appState = parseSearchResults(t)
-                liveDataForViewObserve.value = appState
-            }
-            override fun onError(e: Throwable) { liveDataForViewObserve.value = AppState.Error(e) }
-            override fun onComplete() {}
-        }
+    fun subscribe(): LiveData<AppState> {
+        return liveDataForViewToObserve
     }
 
     override fun getData(word: String, isOnline: Boolean) {
-        compositeDisposable.add(
-            interactor.getData(word, isOnline)
-                .subscribeOn(shedulerProvider.io()).observeOn(shedulerProvider.ui())
-                .doOnSubscribe(doOnSubscribe()).subscribeWith(getObserver())
-        )
+        mutableLiveData.value = AppState.Loading(null)
+        cancelJob()
+        viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
+
+    override fun handleError(error: Throwable) {
+        mutableLiveData.postValue(AppState.Error(error))
+    }
+
+    override fun onCleared() {
+        mutableLiveData.value = AppState.Success(null)
+        super.onCleared()
+    }
+
+    private suspend fun startInteractor(word: String, isOnline: Boolean) = withContext(Dispatchers.IO) {
+        mutableLiveData.postValue(parseSearchResults(interactor.getData(word, isOnline)))
+    }
+
 }
