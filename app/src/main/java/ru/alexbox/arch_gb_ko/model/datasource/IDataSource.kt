@@ -1,4 +1,4 @@
-package ru.alexbox.arch_gb_ko.data
+package ru.alexbox.arch_gb_ko.model.datasource
 
 import io.reactivex.Observable
 

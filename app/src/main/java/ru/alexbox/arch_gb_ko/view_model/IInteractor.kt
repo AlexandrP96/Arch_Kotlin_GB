@@ -1,4 +1,4 @@
-package ru.alexbox.arch_gb_ko.interactor
+package ru.alexbox.arch_gb_ko.view_model
 
 import io.reactivex.Observable
 

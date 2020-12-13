@@ -1,4 +1,4 @@
-package ru.alexbox.arch_gb_ko.repository
+package ru.alexbox.arch_gb_ko.model.repository
 
 import io.reactivex.Observable
 

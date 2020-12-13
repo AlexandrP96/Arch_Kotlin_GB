@@ -13,11 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Arch_GB_Ko"
-        tools:ignore="AllowBackup">
-        <activity android:name=".view.BaseActivity">
+        tools:ignore="AllowBackup"
+        android:name=".application.TranslatorApp">
 
-        </activity>
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".view.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
