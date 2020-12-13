@@ -1,16 +1,12 @@
 package ru.alexbox.arch_gb_ko.view.main
 
 import androidx.lifecycle.LiveData
-import io.reactivex.disposables.Disposable
 import ru.alexbox.arch_gb_ko.util.parseSearchResults
-import io.reactivex.observers.DisposableObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import ru.alexbox.arch_gb_ko.model.data.AppState
 import ru.alexbox.arch_gb_ko.view_model.BaseViewModel
-import javax.inject.Inject
 
 class MainViewModel(private val interactor: MainInteractor) :
         BaseViewModel<AppState>() {

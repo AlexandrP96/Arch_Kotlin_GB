@@ -3,14 +3,15 @@ package ru.alexbox.arch_gb_ko.view.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import dagger.android.AndroidInjection
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import ru.alexbox.arch_gb_ko.R
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 import ru.alexbox.arch_gb_ko.model.data.AppState
 import ru.alexbox.arch_gb_ko.model.data.DataModel
 import ru.alexbox.arch_gb_ko.util.isOnline
 import ru.alexbox.arch_gb_ko.view.base.BaseActivity
-
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
@@ -44,13 +45,53 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        initViewModel()
+        initViews()
     }
 
+    private fun initViewModel() {
+        if (recycler_view.adapter != null) {
+            throw IllegalStateException("The ViewModel should be initialised first")
+        }
+        val viewModel: MainViewModel by viewModel()
+        model = viewModel
+        model.subscribe().observe(this@MainActivity, Observer<AppState> { renderData(it) })
+    }
+
+    private fun initViews() {
+        fab_button.setOnClickListener(fabClickListener)
+        recycler_view.layoutManager = LinearLayoutManager(applicationContext)
+        recycler_view.adapter = adapter
+    }
+
+    private fun showLoading() { status_view.setText(R.string.status_loading) }
+    private fun showWorking() { status_view.setText(R.string.status_none) }
+
     override fun renderData(dataModel: AppState) {
-        TODO("Not yet implemented")
+        when (dataModel) {
+            is AppState.Success -> {
+                showWorking()
+                val data = dataModel.data
+                if (data.isNullOrEmpty()) {
+                    showAlertDialog(
+                            getString(R.string.status_error),
+                            getString(R.string.empty_server_responce)
+                    )
+                } else {
+                    adapter.setData(data)
+                }
+            }
+            is AppState.Loading -> {
+                showLoading()
+            }
+            is AppState.Error -> {
+                showWorking()
+                showAlertDialog(getString(R.string.status_error), dataModel.error.message)
+            }
+        }
     }
 
     companion object {
