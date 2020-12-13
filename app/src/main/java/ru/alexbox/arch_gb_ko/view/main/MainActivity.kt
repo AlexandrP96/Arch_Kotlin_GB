@@ -15,6 +15,7 @@ import ru.alexbox.arch_gb_ko.view.base.BaseActivity
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
+    // for init commit
     override lateinit var model: MainViewModel
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener) }
 
