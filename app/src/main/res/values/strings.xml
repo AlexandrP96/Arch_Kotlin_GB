@@ -12,6 +12,8 @@
 
     <string name="button_search">Search</string>
     <string name="button_cancel">Cancel</string>
+    <string name="status_default" />
+    <string name="btn_history">history</string>
 
 
 </resources>
