@@ -6,7 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 
-@Entity(indices = arrayOf(Index(value = arrayOf("word"), unique = true)))
+@Entity(indices = [Index(value = arrayOf("word"), unique = true)])
 class HistoryEntity (
     @field:PrimaryKey
     @field:ColumnInfo(name = "word")

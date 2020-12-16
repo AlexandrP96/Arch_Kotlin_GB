@@ -5,10 +5,6 @@ import ru.alexbox.arch_gb_ko.model.data.DataModel
 import ru.alexbox.arch_gb_ko.model.data.Meanings
 import ru.alexbox.arch_gb_ko.room.HistoryEntity
 
-fun parseOnlineSearchResults(state: AppState): AppState {
-    return AppState.Success(mapResult(state, true))
-}
-
 fun parseLocalSearchResults(data: AppState): AppState {
     return AppState.Success(mapResult(data, false))
 }

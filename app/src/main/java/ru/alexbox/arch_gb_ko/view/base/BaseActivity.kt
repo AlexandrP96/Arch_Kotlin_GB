@@ -2,7 +2,6 @@ package ru.alexbox.arch_gb_ko.view.base
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.alexbox.arch_gb_ko.R
@@ -70,7 +69,7 @@ abstract class BaseActivity<T : AppState, I : IInteractor<T>> : AppCompatActivit
         )
     }
 
-    protected fun showAlertDialog(title: String?, message: String?) {
+    private fun showAlertDialog(title: String?, message: String?) {
         AlertDialogFragment.newInstance(title, message).show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
     }
 

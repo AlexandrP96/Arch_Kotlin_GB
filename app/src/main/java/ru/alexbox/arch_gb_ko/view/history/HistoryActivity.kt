@@ -1,6 +1,5 @@
 package ru.alexbox.arch_gb_ko.view.history
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_history.*
