@@ -46,12 +46,12 @@ class MainAdapter(private var onListItemClickListener: OnListItemClickListener) 
                 itemView.header_item.text = data.text
                 itemView.description_item.text = data.meanings?.get(0)?.translation?.translation
 
-                itemView.setOnClickListener { getResult(data) }
+                itemView.setOnClickListener { openInNewWindow(data) }
             }
         }
     }
 
-    private fun getResult(listItemData: DataModel) {
+    private fun openInNewWindow(listItemData: DataModel) {
         onListItemClickListener.onItemClick(listItemData)
     }
 }

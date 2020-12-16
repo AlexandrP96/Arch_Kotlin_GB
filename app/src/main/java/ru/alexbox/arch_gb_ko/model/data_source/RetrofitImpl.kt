@@ -1,4 +1,4 @@
-package ru.alexbox.arch_gb_ko.model.datasource
+package ru.alexbox.arch_gb_ko.model.data_source
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import io.reactivex.Observable
@@ -8,14 +8,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.alexbox.arch_gb_ko.model.data.DataModel
-import ru.alexbox.arch_gb_ko.model.data.SearchResult
 import ru.alexbox.arch_gb_ko.model.data.api.BaseInterceptor
 import ru.alexbox.arch_gb_ko.model.data.api.IApiService
 
 class RetrofitImpl : IDataSource<List<DataModel>> {
 
-    override fun getData(word: String): Observable<List<DataModel>> {
-        return getService(BaseInterceptor.interceptor).search(word)
+    override suspend fun getData(word: String): List<DataModel> {
+        return getService(BaseInterceptor.interceptor).searchAsync(word).await()
     }
 
     private fun getService(interceptor: Interceptor): IApiService {
