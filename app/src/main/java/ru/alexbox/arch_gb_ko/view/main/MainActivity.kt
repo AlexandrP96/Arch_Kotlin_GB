@@ -3,7 +3,6 @@ package ru.alexbox.arch_gb_ko.view.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.alexbox.arch_gb_ko.R
 import kotlinx.android.synthetic.main.activity_main.*
