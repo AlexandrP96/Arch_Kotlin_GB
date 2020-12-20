@@ -2,7 +2,6 @@ package ru.alexbox.arch_gb_ko.view.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.alexbox.arch_gb_ko.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -64,7 +63,7 @@ class MainActivity : BaseActivity<DataModel, MainInteractor>() {
         val viewModel: MainViewModel by viewModel()
         model = viewModel
         model.subscribe().observe(this@MainActivity,
-            Observer<DataModel> { renderData(it) })
+                { renderData(it) })
     }
 
     private fun initViews() {

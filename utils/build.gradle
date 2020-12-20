@@ -5,11 +5,9 @@ apply plugin: 'kotlin-android'
 dependencies {
     implementation Design.appcompat
 
-    //Kotlin
     implementation Kotlin.core
     implementation Kotlin.stdlib
 
-    //Test
     testImplementation TestImpl.junit
     androidTestImplementation TestImpl.runner
     androidTestImplementation TestImpl.espresso
