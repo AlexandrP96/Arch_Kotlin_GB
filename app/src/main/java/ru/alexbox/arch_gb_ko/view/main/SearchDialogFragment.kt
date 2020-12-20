@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.search_dialog.*
 import ru.alexbox.arch_gb_ko.R
-import ru.alexbox.arch_gb_ko.util.getEmptyString
+import ru.alexbox.utils.getEmptyString
 
 class SearchDialogFragment : BottomSheetDialogFragment() {
     private lateinit var searchEditText: TextInputEditText

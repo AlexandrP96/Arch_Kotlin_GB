@@ -1,22 +1,19 @@
 package ru.alexbox.arch_gb_ko.view.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.alexbox.arch_gb_ko.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import ru.alexbox.arch_gb_ko.model.data.AppState
-import ru.alexbox.arch_gb_ko.model.data.DataModel
-import ru.alexbox.arch_gb_ko.util.convertMeaningsToString
-import ru.alexbox.arch_gb_ko.util.isOnline
-import ru.alexbox.arch_gb_ko.view.base.BaseActivity
+import ru.alexbox.arch_gb_ko.utils.convertMeaningsToString
 import ru.alexbox.arch_gb_ko.view.description_screen.DescriptionActivity
-import ru.alexbox.arch_gb_ko.view.history.HistoryActivity
+import ru.alexbox.core.BaseActivity
+import ru.alexbox.model.data.DataModel
+import ru.alexbox.model.data.SearchResult
 
-class MainActivity : BaseActivity<AppState, MainInteractor>() {
+class MainActivity : BaseActivity<DataModel, MainInteractor>() {
 
     override lateinit var model: MainViewModel
     private val adapter: MainAdapter by lazy { MainAdapter(onListItemClickListener) }
@@ -30,13 +27,13 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
-            override fun onItemClick(data: DataModel) {
+            override fun onItemClick(data: SearchResult) {
                 startActivity(
                     DescriptionActivity.getIntent(
                         this@MainActivity,
                         data.text!!,
                         convertMeaningsToString(data.meanings!!),
-                        data.meanings[0].imageUrl
+                        data.meanings!![0].imageUrl
                     )
                 )
             }
@@ -45,7 +42,7 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onSearchClickListener: SearchDialogFragment.OnSearchClickListener =
         object : SearchDialogFragment.OnSearchClickListener {
             override fun onClick(searchWord: String) {
-                isNetworkAvailable = isOnline(applicationContext)
+                isNetworkAvailable = ru.alexbox.utils.isOnline(applicationContext)
                 if (isNetworkAvailable) {
                     model.getData(searchWord, isNetworkAvailable)
                 } else {
@@ -62,23 +59,12 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         initViews()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.btn_history -> {
-                startActivity(Intent(this, HistoryActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun initViewModel() {
-        if (recycler_view.adapter != null) {
-            throw IllegalStateException("The ViewModel should be initialised first")
-        }
+        check(recycler_view.adapter == null) { "The ViewModel should be initialised first" }
         val viewModel: MainViewModel by viewModel()
         model = viewModel
-        model.subscribe().observe(this@MainActivity, { renderData(it) })
+        model.subscribe().observe(this@MainActivity,
+            Observer<DataModel> { renderData(it) })
     }
 
     private fun initViews() {
@@ -92,7 +78,8 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
     }
 
-    override fun setDataToAdapter(data: List<DataModel>) {
+    override fun setDataToAdapter(data: List<SearchResult>) {
         adapter.setData(data)
     }
 }
+

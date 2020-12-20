@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Arch_GB_Ko</string>
+    <string name="btn_go">go</string>
+    <string name="edit_text_tap">enter your word</string>
+
+    <string name="empty_server_responce">Server Error!</string>
+    <string name="status_none" />
+    <string name="status_loading">Loading</string>
+    <string name="status_error">Error</string>
+    <string name="status_internet_error">No Internet Connection</string>
+    <string name="status_success">Success</string>
+
+    <string name="button_search">Search</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="status_default" />
+    <string name="btn_history">history</string>
+
+</resources>

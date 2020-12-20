@@ -15,10 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Arch_GB_Ko"
         tools:ignore="AllowBackup">
+
         <activity android:name=".view.description_screen.DescriptionActivity">
 
         </activity>
-        <activity android:name=".view.history.HistoryActivity" />
+
+
         <activity
             android:name=".view.main.MainActivity"
             android:screenOrientation="portrait">
@@ -28,6 +30,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

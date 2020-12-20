@@ -2,24 +2,23 @@ package ru.alexbox.arch_gb_ko.di
 
 import androidx.room.Room
 import org.koin.dsl.module
-import ru.alexbox.arch_gb_ko.model.data.DataModel
-import ru.alexbox.arch_gb_ko.model.data_source.RetrofitImpl
-import ru.alexbox.arch_gb_ko.model.data_source.RoomDataBaseImpl
-import ru.alexbox.arch_gb_ko.model.repository.IRepository
-import ru.alexbox.arch_gb_ko.model.repository.IRepositoryLocal
-import ru.alexbox.arch_gb_ko.model.repository.RepositoryImpl
-import ru.alexbox.arch_gb_ko.model.repository.RepositoryImplLocal
-import ru.alexbox.arch_gb_ko.room.HistoryDataBase
-import ru.alexbox.arch_gb_ko.view.history.HistoryInteractor
-import ru.alexbox.arch_gb_ko.view.history.HistoryViewModel
+import repository.*
+import repository.room.HistoryDataBase
 import ru.alexbox.arch_gb_ko.view.main.MainInteractor
 import ru.alexbox.arch_gb_ko.view.main.MainViewModel
+import ru.alexbox.historyscreen.HistoryInteractor
+import ru.alexbox.historyscreen.HistoryViewModel
+import ru.alexbox.model.data.SearchResult
 
 val application = module {
     single { Room.databaseBuilder(get(), HistoryDataBase::class.java, "HistoryDB").build()}
     single { get<HistoryDataBase>().historyDao() }
-    single<IRepository<List<DataModel>>> {RepositoryImpl(RetrofitImpl())}
-    single<IRepositoryLocal<List<DataModel>>> { RepositoryImplLocal(RoomDataBaseImpl(get())) }
+    single<IRepository<List<SearchResult>>> { RepositoryImpl(RetrofitImpl()) }
+    single<IRepositoryLocal<List<SearchResult>>> {
+        RepositoryImplLocal(
+            RoomDataBaseImpl(get())
+        )
+    }
 }
 
 val mainScreen = module {

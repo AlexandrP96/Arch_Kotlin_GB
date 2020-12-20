@@ -1,3 +1,8 @@
+include ':core'
+include ':historyScreen'
+include ':model'
+include ':repository'
 include ':utils'
 include ':app'
+
 rootProject.name = "Arch_GB_Ko"

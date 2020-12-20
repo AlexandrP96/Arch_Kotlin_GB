@@ -1,39 +1,39 @@
 package ru.alexbox.arch_gb_ko.view.main
 
 import androidx.lifecycle.LiveData
-import ru.alexbox.arch_gb_ko.util.parseSearchResults
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import ru.alexbox.arch_gb_ko.model.data.AppState
-import ru.alexbox.arch_gb_ko.view_model.BaseViewModel
+import ru.alexbox.arch_gb_ko.utils.parseOnlineSearchResults
+import ru.alexbox.core.view_model.BaseViewModel
+import ru.alexbox.model.data.DataModel
 
 class MainViewModel(private val interactor: MainInteractor) :
-        BaseViewModel<AppState>() {
+        BaseViewModel<DataModel>() {
 
-    private val liveDataForViewToObserve : LiveData<AppState> = mutableLiveData
+    private val liveDataForViewToObserve : LiveData<DataModel> = mutableLiveData
 
-    fun subscribe(): LiveData<AppState> {
+    fun subscribe(): LiveData<DataModel> {
         return liveDataForViewToObserve
     }
 
     override fun getData(word: String, isOnline: Boolean) {
-        mutableLiveData.value = AppState.Loading(null)
+        mutableLiveData.value = DataModel.Loading(null)
         cancelJob()
         viewModelCoroutineScope.launch { startInteractor(word, isOnline) }
     }
 
     override fun handleError(error: Throwable) {
-        mutableLiveData.postValue(AppState.Error(error))
+        mutableLiveData.postValue(DataModel.Error(error))
     }
 
     override fun onCleared() {
-        mutableLiveData.value = AppState.Success(null)
+        mutableLiveData.value = DataModel.Success(null)
         super.onCleared()
     }
 
     private suspend fun startInteractor(word: String, isOnline: Boolean) = withContext(Dispatchers.IO) {
-        mutableLiveData.postValue(parseSearchResults(interactor.getData(word, isOnline)))
+        mutableLiveData.postValue(parseOnlineSearchResults(interactor.getData(word, isOnline)))
     }
 
 }

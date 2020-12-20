@@ -95,9 +95,9 @@ object Picasso {
 }
 
 object Room {
-    const val runtime = "androidx.room:room-runtime:${Versions.runtime}"
-    const val compiler = "androidx.room:room-compiler:${Versions.roomCompiler}"
-    const val room_ktx = "androidx.room:room-ktx:${Versions.roomKtx}"
+    const val runtime = "androidx.repository.room:repository.room-runtime:${Versions.runtime}"
+    const val compiler = "androidx.repository.room:repository.room-compiler:${Versions.roomCompiler}"
+    const val room_ktx = "androidx.repository.room:repository.room-ktx:${Versions.roomKtx}"
 }
 
 object TestImpl {
