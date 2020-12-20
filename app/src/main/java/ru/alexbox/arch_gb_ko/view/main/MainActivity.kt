@@ -1,17 +1,20 @@
 package ru.alexbox.arch_gb_ko.view.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.alexbox.arch_gb_ko.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.alexbox.arch_gb_ko.model.data.AppState
 import ru.alexbox.arch_gb_ko.model.data.DataModel
+import ru.alexbox.arch_gb_ko.util.convertMeaningsToString
 import ru.alexbox.arch_gb_ko.util.isOnline
 import ru.alexbox.arch_gb_ko.view.base.BaseActivity
+import ru.alexbox.arch_gb_ko.view.description_screen.DescriptionActivity
+import ru.alexbox.arch_gb_ko.view.history.HistoryActivity
 
 class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
@@ -28,7 +31,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: DataModel) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    DescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text!!,
+                        convertMeaningsToString(data.meanings!!),
+                        data.meanings[0].imageUrl
+                    )
+                )
             }
         }
 
@@ -52,6 +62,16 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         initViews()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.btn_history -> {
+                startActivity(Intent(this, HistoryActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initViewModel() {
         if (recycler_view.adapter != null) {
             throw IllegalStateException("The ViewModel should be initialised first")
@@ -67,35 +87,12 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
         recycler_view.adapter = adapter
     }
 
-    private fun showLoading() { status_view.setText(R.string.status_loading) }
-    private fun showWorking() { status_view.setText(R.string.status_none) }
-
-    override fun renderData(dataModel: AppState) {
-        when (dataModel) {
-            is AppState.Success -> {
-                showWorking()
-                val data = dataModel.data
-                if (data.isNullOrEmpty()) {
-                    showAlertDialog(
-                            getString(R.string.status_error),
-                            getString(R.string.empty_server_responce)
-                    )
-                } else {
-                    adapter.setData(data)
-                }
-            }
-            is AppState.Loading -> {
-                showLoading()
-            }
-            is AppState.Error -> {
-                showWorking()
-                showAlertDialog(getString(R.string.status_error), dataModel.error.message)
-            }
-        }
-    }
-
     companion object {
         private const val BOTTOM_SHEET_FRAGMENT_DIALOG_TAG =
             "74a54328-5d62-46bf-ab6b-cbf5fgt0-092395"
+    }
+
+    override fun setDataToAdapter(data: List<DataModel>) {
+        adapter.setData(data)
     }
 }
