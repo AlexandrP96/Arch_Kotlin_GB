@@ -1,7 +1,7 @@
 package repository
 
-import ru.alexbox.model.data.DataModel
+import ru.alexbox.model.data.AppState
 
 interface IDataSourceLocal<T> : IDataSource<T> {
-    suspend fun saveToDB(dataModel: DataModel)
+    suspend fun saveToDB(appState : AppState)
 }

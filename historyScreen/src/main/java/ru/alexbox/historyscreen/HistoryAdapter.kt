@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.history_recycler_item.view.*
-import ru.alexbox.model.data.SearchResult
+import ru.alexbox.model.data.DataModel
 
 class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerViewItemHolder>() {
 
-    private var data: List<SearchResult> = arrayListOf()
+    private var data: List<DataModel> = arrayListOf()
 
-    fun setData(data: List<SearchResult>) {
+    fun setData(data: List<DataModel>) {
         this.data = data
         notifyDataSetChanged()
     }
@@ -37,7 +37,7 @@ class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.RecyclerViewItemHolde
 
     inner class RecyclerViewItemHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(data: SearchResult) {
+        fun bind(data: DataModel) {
             if (layoutPosition != RecyclerView.NO_POSITION) {
                 itemView.history_recycler_view.text = data.text
                 itemView.setOnClickListener {

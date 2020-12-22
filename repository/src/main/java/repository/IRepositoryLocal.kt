@@ -1,7 +1,8 @@
 package repository
 
-import ru.alexbox.model.data.DataModel
+import ru.alexbox.model.data.AppState
+
 
 interface IRepositoryLocal<T> : IRepository<T> {
-    suspend fun saveToDB(dataModel: DataModel)
+    suspend fun saveToDB(appState: AppState)
 }

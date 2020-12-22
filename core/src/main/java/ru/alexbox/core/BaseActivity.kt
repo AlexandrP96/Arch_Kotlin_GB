@@ -5,14 +5,14 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.alexbox.core.view_model.BaseViewModel
 import ru.alexbox.core.view_model.IInteractor
+import ru.alexbox.model.data.AppState
 import ru.alexbox.model.data.DataModel
-import ru.alexbox.model.data.SearchResult
 import ru.alexbox.utils.isOnline
 import ru.alexbox.utils.ui.AlertDialogFragment
 
 private const val DIALOG_FRAGMENT_TAG = "74a54328-5d62-46bf-ab6b-cbf5d8c79522"
 
-abstract class BaseActivity<T : DataModel, I : IInteractor<T>> : AppCompatActivity() {
+abstract class BaseActivity<T : AppState, I : IInteractor<T>> : AppCompatActivity() {
 
     abstract val model: BaseViewModel<T>
     protected var isNetworkAvailable: Boolean = false
@@ -30,10 +30,10 @@ abstract class BaseActivity<T : DataModel, I : IInteractor<T>> : AppCompatActivi
         }
     }
 
-    protected fun renderData(dataModel : T) {
-        when (dataModel) {
-            is DataModel.Success -> {
-                dataModel.data?.let {
+    protected fun renderData(appState : T) {
+        when (appState) {
+            is AppState.Success -> {
+                appState.data?.let {
                     if (it.isEmpty()) {
                         showAlertDialog(
                             getString(R.string.status_error),
@@ -44,12 +44,12 @@ abstract class BaseActivity<T : DataModel, I : IInteractor<T>> : AppCompatActivi
                     }
                 }
             }
-            is DataModel.Loading -> {
+            is AppState.Loading -> {
 
             }
-            is DataModel.Error -> {
+            is AppState.Error -> {
 
-                showAlertDialog(getString(R.string.status_error), dataModel.error.message)
+                showAlertDialog(getString(R.string.status_error), appState.error.message)
             }
         }
     }
@@ -69,5 +69,5 @@ abstract class BaseActivity<T : DataModel, I : IInteractor<T>> : AppCompatActivi
         return supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
     }
 
-    abstract fun setDataToAdapter(data: List<SearchResult>)
+    abstract fun setDataToAdapter(data: List<DataModel>)
 }

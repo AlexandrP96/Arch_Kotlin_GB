@@ -1,20 +1,20 @@
 package ru.alexbox.arch_gb_ko.utils
 
+import ru.alexbox.model.data.AppState
 import ru.alexbox.model.data.DataModel
 import ru.alexbox.model.data.Meanings
-import ru.alexbox.model.data.SearchResult
 
-fun parseOnlineSearchResults(data: DataModel): DataModel {
-    return DataModel.Success(mapResult(data, true))
+fun parseOnlineSearchResults(data: AppState): AppState {
+    return AppState.Success(mapResult(data, true))
 }
 
 private fun mapResult(
-    data: DataModel,
+    data: AppState,
     isOnline: Boolean
-): List<SearchResult> {
-    val newSearchResults = arrayListOf<SearchResult>()
+): List<DataModel> {
+    val newSearchResults = arrayListOf<DataModel>()
     when (data) {
-        is DataModel.Success -> {
+        is AppState.Success -> {
             getSuccessResultData(data, isOnline, newSearchResults)
         }
     }
@@ -22,37 +22,37 @@ private fun mapResult(
 }
 
 private fun getSuccessResultData(
-    data: DataModel.Success,
+    data: AppState.Success,
     isOnline: Boolean,
-    newSearchResults: ArrayList<SearchResult>
+    newSearchResults: ArrayList<DataModel>
 ) {
-    val searchResults: List<SearchResult> = data.data as List<SearchResult>
-    if (searchResults.isNotEmpty()) {
+    val dataModel: List<DataModel> = data.data as List<DataModel>
+    if (dataModel.isNotEmpty()) {
         if (isOnline) {
-            for (searchResult in searchResults) {
+            for (searchResult in dataModel) {
                 parseOnlineResult(searchResult, newSearchResults)
             }
         } else {
-            for (searchResult in searchResults) {
-                newSearchResults.add(SearchResult(searchResult.text, arrayListOf()))
+            for (searchResult in dataModel) {
+                newSearchResults.add(DataModel(searchResult.text, arrayListOf()))
             }
         }
     }
 }
 
 private fun parseOnlineResult(
-    searchResult: SearchResult,
-    newSearchResults: ArrayList<SearchResult>
+    dataModel: DataModel,
+    newSearchResults: ArrayList<DataModel>
 ) {
-    if (!searchResult.text.isNullOrBlank() && !searchResult.meanings.isNullOrEmpty()) {
+    if (!dataModel.text.isNullOrBlank() && !dataModel.meanings.isNullOrEmpty()) {
         val newMeanings = arrayListOf<Meanings>()
-        for (meaning in searchResult.meanings!!) {
+        for (meaning in dataModel.meanings!!) {
             if (meaning.translation != null && !meaning.translation!!.translation.isNullOrBlank()) {
                 newMeanings.add(Meanings(meaning.translation, meaning.imageUrl))
             }
         }
         if (newMeanings.isNotEmpty()) {
-            newSearchResults.add(SearchResult(searchResult.text, newMeanings))
+            newSearchResults.add(DataModel(dataModel.text, newMeanings))
         }
     }
 }

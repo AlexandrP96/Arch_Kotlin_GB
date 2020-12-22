@@ -41,7 +41,9 @@
             android:id="@+id/btn_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/btn_history" />
+            android:text="@string/btn_history"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_button"
@@ -51,6 +53,14 @@
             android:focusable="true"
             app:srcCompat="@android:drawable/ic_menu_zoom"
             tools:ignore="ContentDescription" />
+
+        <Button
+            android:id="@+id/btn_update"
+            android:layout_width="152dp"
+            android:layout_height="50dp"
+            android:text="@string/btn_update"
+            android:textSize="24sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

@@ -3,9 +3,10 @@ package ru.alexbox.core.view_model
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.*
+import ru.alexbox.model.data.AppState
 import ru.alexbox.model.data.DataModel
 
-abstract class BaseViewModel<T : DataModel>(
+abstract class BaseViewModel<T : AppState>(
     protected open val mutableLiveData: MutableLiveData<T> = MutableLiveData()
 ) : ViewModel() {
     protected val viewModelCoroutineScope = CoroutineScope(

@@ -44,7 +44,7 @@ object Versions {
     const val glide = "4.9.0"
     const val glideCompiler = "4.9.0"
 
-    const val picasso = "2.5.2"
+    const val googlePlayCore = "1.6.3"
 
     const val roomKtx = "2.2.0-alpha01"
     const val runtime = "2.2.0-alpha01"
@@ -89,10 +89,6 @@ object Glide {
     const val glide_compiler = "com.github.bumptech.glide:compiler:${Versions.glideCompiler}"
 }
 
-object Picasso {
-    const val picasso = "com.squareup.picasso:picasso:${Versions.picasso}"
-}
-
 object Room {
     const val runtime = "androidx.repository.room:repository.room-runtime:${Versions.runtime}"
     const val compiler = "androidx.repository.room:repository.room-compiler:${Versions.roomCompiler}"
@@ -103,4 +99,8 @@ object TestImpl {
     const val junit = "junit:junit:${Versions.jUnit}"
     const val runner = "androidx.test:runner:${Versions.runner}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
+}
+
+object GooglePlay {
+    const val googlePlayCore = "com.google.android.play:core:${Versions.googlePlayCore}"
 }

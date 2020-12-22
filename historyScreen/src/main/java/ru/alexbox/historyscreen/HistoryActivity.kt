@@ -5,10 +5,11 @@ import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_history.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import ru.alexbox.core.BaseActivity
+import ru.alexbox.model.data.AppState
 import ru.alexbox.model.data.DataModel
-import ru.alexbox.model.data.SearchResult
 
-class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
+
+class HistoryActivity : BaseActivity<AppState, HistoryInteractor>() {
 
     override lateinit var model: HistoryViewModel
     private val adapter: HistoryAdapter by lazy { HistoryAdapter() }
@@ -25,7 +26,7 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
         model.getData("", false)
     }
 
-    override fun setDataToAdapter(data: List<SearchResult>) {
+    override fun setDataToAdapter(data: List<DataModel>) {
         adapter.setData(data)
     }
 
@@ -35,7 +36,7 @@ class HistoryActivity : BaseActivity<DataModel, HistoryInteractor>() {
         }
         val viewModel: HistoryViewModel by viewModel()
         model = viewModel
-        model.subscribe().observe(this@HistoryActivity, Observer<DataModel> { renderData(it) })
+        model.subscribe().observe(this@HistoryActivity, Observer<AppState> { renderData(it) })
     }
 
     private fun initViews() {

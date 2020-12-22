@@ -2,23 +2,23 @@ package ru.alexbox.arch_gb_ko.view.main
 
 import repository.IRepository
 import repository.IRepositoryLocal
-import ru.alexbox.arch_gb_ko.AppState
 import ru.alexbox.core.view_model.IInteractor
+import ru.alexbox.model.data.AppState
 import ru.alexbox.model.data.DataModel
 import ru.alexbox.model.data.SearchResult
 
 class MainInteractor(
-    private val repositoryRemote: IRepository<List<SearchResult>>,
-    private val repositoryLocal: IRepositoryLocal<List<SearchResult>>
-) : IInteractor<DataModel> {
-    override suspend fun getData(word: String, fromRemoteSource: Boolean): DataModel {
-        val dataModel : DataModel
+    private val repositoryRemote: IRepository<List<DataModel>>,
+    private val repositoryLocal: IRepositoryLocal<List<DataModel>>
+) : IInteractor<AppState> {
+    override suspend fun getData(word: String, fromRemoteSource: Boolean): AppState {
+        val appState: AppState
         if (fromRemoteSource) {
-            dataModel = DataModel.Success(repositoryRemote.getData(word))
-            repositoryLocal.saveToDB(dataModel)
+            appState = AppState.Success(repositoryRemote.getData(word))
+            repositoryLocal.saveToDB(appState)
         } else {
-            dataModel = DataModel.Success(repositoryLocal.getData(word))
+            appState = AppState.Success(repositoryLocal.getData(word))
         }
-        return dataModel
+        return appState
     }
 }

@@ -14,4 +14,5 @@
     <string name="button_cancel">Cancel</string>
     <string name="status_default" />
     <string name="btn_history">history</string>
+    <string name="btn_update">UPDATE</string>
 </resources>

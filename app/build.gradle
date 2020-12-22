@@ -51,6 +51,8 @@ dependencies {
     kapt Room.compiler
     implementation Room.room_ktx
 
+    implementation GooglePlay.googlePlayCore
+
     implementation Glide.glide
     kapt Glide.glide_compiler
 

@@ -8,12 +8,13 @@ import repository.api.BaseInterceptor
 import repository.api.IApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.alexbox.model.data.DataModel
 import ru.alexbox.model.data.SearchResult
 
 
-class RetrofitImpl : IDataSource<List<SearchResult>> {
+class RetrofitImpl : IDataSource<List<DataModel>> {
 
-    override suspend fun getData(word: String): List<SearchResult> {
+    override suspend fun getData(word: String): List<DataModel> {
         return getService(BaseInterceptor.interceptor).searchAsync(word).await()
     }
 
